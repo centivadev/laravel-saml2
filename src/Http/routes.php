@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group([
+    'domain' => config('saml2.routesDomain'),
     'prefix' => config('saml2.routesPrefix'),
     'middleware' => array_merge(['saml2.resolveTenant'], config('saml2.routesMiddleware')),
 ], function () {
