@@ -12,6 +12,13 @@ return [
     'saml2_controller' => '\Slides\Saml2\Http\Controllers\Saml2Controller',
 
     /*
+    | (Optional) Use a custom domain for the routes.
+    | If left null, the routes will be available on the default domain.
+    |
+    */
+    'routesDomain' => env('SAML2_DOMAIN', null),
+
+    /*
     |--------------------------------------------------------------------------
     | Tenant Model
     |--------------------------------------------------------------------------
