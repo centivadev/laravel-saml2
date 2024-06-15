@@ -2,7 +2,7 @@
 
 namespace Slides\Saml2;
 
-use OneLogin\Saml2\Auth as OneLoginAuth;
+use Slides\Saml2\Overrides\Auth as OneLoginAuth;
 use Slides\Saml2\Models\Tenant;
 
 /**
@@ -69,7 +69,7 @@ class Saml2User
     {
         return $this->auth->getAttribute($name);
     }
-    
+
     /**
      * The attributes retrieved from assertion processed this request.
      *
