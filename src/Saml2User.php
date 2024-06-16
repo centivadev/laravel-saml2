@@ -2,7 +2,7 @@
 
 namespace Slides\Saml2;
 
-use Slides\Saml2\Overrides\Auth as OneLoginAuth;
+use Slides\Saml2\Overrides\OneLoginAuth;
 use Slides\Saml2\Models\Tenant;
 
 /**

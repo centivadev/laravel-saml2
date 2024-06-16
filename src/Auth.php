@@ -82,6 +82,7 @@ class Auth
      * @param bool $isPassive When true the AuthNReuqest will set the Ispassive='true'
      * @param bool $stay True if we want to stay (returns the url string) False to redirect
      * @param bool $setNameIdPolicy When true the AuthNReuqest will set a nameIdPolicy element
+     * @param string|null $firstLoginEmail The email of the user that is logging in for the first time
      *
      * @return string|null If $stay is True, it return a string with the SLO URL + LogoutRequest + parameters
      *
@@ -93,10 +94,11 @@ class Auth
         $forceAuthn = false,
         $isPassive = false,
         $stay = false,
-        $setNameIdPolicy = true
+        $setNameIdPolicy = true,
+        $firstLoginEmail = null
     )
     {
-        return $this->base->login($returnTo, $parameters, $forceAuthn, $isPassive, $stay, $setNameIdPolicy);
+        return $this->base->login($returnTo, $parameters, $forceAuthn, $isPassive, $stay, $setNameIdPolicy, null, $firstLoginEmail);
     }
 
     /**

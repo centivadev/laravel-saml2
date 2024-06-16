@@ -310,13 +310,14 @@ class CustomUtils
      * @param string $url        The target url
      * @param array  $parameters Extra parameters to be passed as part of the url
      * @param bool   $stay       True if we want to stay (returns the url string) False to redirect
+     * @param null|string $firstLoginEmail The email to be used in the first login
      *
      * @return string|null $url
      * @phpstan-return ($stay is true ? string : never)
      *
      * @throws Error
      */
-    public static function redirect($url, array $parameters = array(), $stay = false)
+    public static function redirect($url, array $parameters = array(), $stay = false, $firstLoginEmail = null)
     {
         assert(is_string($url));
 
@@ -370,7 +371,11 @@ class CustomUtils
             }
         }
 
-        $url = 'https://accounts.google.com/AccountChooser?continue=' . urlencode($url);
+        if ($firstLoginEmail) {
+            $url = 'https://accounts.google.com/v3/signin/identifier?continue=' . urlencode($url) . '&flowName=GlifWebSignIn&flowEntry=AddSession&Email=' . urlencode($firstLoginEmail);
+        } else {
+            $url = 'https://accounts.google.com/AccountChooser?continue=' . urlencode($url);
+        }
 
         if ($stay) {
             return $url;

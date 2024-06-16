@@ -30,7 +30,7 @@ use Slides\Saml2\Overrides\CustomUtils;
 /**
  * Main class of SAML PHP Toolkit
  */
-class Auth
+class OneLoginAuth
 {
     /**
      * Settings data.
@@ -544,13 +544,14 @@ class Auth
      * @param bool        $stay            True if we want to stay (returns the url string) False to redirect
      * @param bool        $setNameIdPolicy When true the AuthNRequest will set a nameIdPolicy element
      * @param string      $nameIdValueReq  Indicates to the IdP the subject that should be authenticated
+     * @param string|null $firstLoginEmail The email of the user that is logging in for the first time
      *
      * @return string|null If $stay is True, it return a string with the SLO URL + LogoutRequest + parameters
      * @phpstan-return ($stay is true ? string : never)
      *
      * @throws Error
      */
-    public function login($returnTo = null, array $parameters = array(), $forceAuthn = true, $isPassive = false, $stay = false, $setNameIdPolicy = true, $nameIdValueReq = null)
+    public function login($returnTo = null, array $parameters = array(), $forceAuthn = true, $isPassive = false, $stay = false, $setNameIdPolicy = true, $nameIdValueReq = null, $firstLoginEmail = null)
     {
         $authnRequest = $this->buildAuthnRequest($this->_settings, $forceAuthn, $isPassive, $setNameIdPolicy, $nameIdValueReq);
 
@@ -572,10 +573,10 @@ class Auth
             $parameters['SigAlg'] = $security['signatureAlgorithm'];
             $parameters['Signature'] = $signature;
         }
-        return $this->encodedRedirectTo($this->getSSOurl(), $parameters, $stay);
+        return $this->encodedRedirectTo($this->getSSOurl(), $parameters, $stay, $firstLoginEmail);
     }
 
-    protected function encodedRedirectTo($url, array $parameters, $stay = false)
+    protected function encodedRedirectTo($url, array $parameters, $stay = false, $firstLoginEmail = null)
     {
         assert(is_string($url));
 
@@ -583,7 +584,7 @@ class Auth
             $url = $_REQUEST['RelayState'];
         }
 
-        return CustomUtils::redirect($url, $parameters, $stay);
+        return CustomUtils::redirect($url, $parameters, $stay, $firstLoginEmail);
     }
 
     /**

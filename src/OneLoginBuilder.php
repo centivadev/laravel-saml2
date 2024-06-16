@@ -2,7 +2,7 @@
 
 namespace Slides\Saml2;
 
-use Slides\Saml2\Overrides\Auth as OneLoginAuth;
+use Slides\Saml2\Overrides\OneLoginAuth;
 use OneLogin\Saml2\Utils as OneLoginUtils;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Contracts\Container\Container;
